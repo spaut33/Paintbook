@@ -78,6 +78,35 @@ class PaintsApiTestCase(APITestCase):
             'quantity': 500
         }
         json_data = json.dumps(data)
+        # 3 items were created during setup
+        self.assertEqual(3, Paint.objects.all().count())
         self.client.force_login(self.user)
         response = self.client.post(url, data=json_data, content_type='application/json')
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+        # 4th item created
+        self.assertEqual(4, Paint.objects.all().count())
+
+    def test_update(self):
+        url = reverse('paint-detail', args=(self.paint_1.id,))
+        data = {
+            'name': 'Changed name CRUD',
+            'quantity': 5,
+        }
+        json_data = json.dumps(data)
+
+        self.client.force_login(self.user)
+        response = self.client.put(url, data=json_data, content_type='application/json')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.paint_1.refresh_from_db()
+        self.assertEqual(5, self.paint_1.quantity)
+
+    def test_delete(self):
+        url = reverse('paint-detail', args=(self.paint_3.id,))
+        self.assertEqual(3, Paint.objects.all().count())
+        # json_data = json.dumps(data)
+
+        self.client.force_login(self.user)
+        response = self.client.delete(url, content_type='application/json')
+        self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
+        self.assertEqual(2, Paint.objects.all().count())
+
