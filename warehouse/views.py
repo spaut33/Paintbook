@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django.shortcuts import render
@@ -13,7 +13,7 @@ class PaintsViewSet(ModelViewSet):
     queryset = Paint.objects.all()
     serializer_class = PaintSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     filter_fields = ['quantity']
     search_fields = ['name', 'article', 'description']
     ordering_fields = ['quantity', 'color']

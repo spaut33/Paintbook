@@ -1,33 +1,36 @@
+import json
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
-from warehouse.models import Paint, Serie, Manufacturer
+from django.contrib.auth.models import User
+from warehouse.models import Paint, Series, Manufacturer
 from warehouse.serializers import PaintSerializer
 
 
 class PaintsApiTestCase(APITestCase):
     def setUp(self):
+        self.user = User.objects.create(username='test_username')
         manufacturer = Manufacturer.objects.create(name='Test Manufacturer 1')
-        serie = Serie.objects.create(name='Test Serie 1', manufacturer=manufacturer)
+        series = Series.objects.create(name='Test Series 1', manufacturer=manufacturer)
         self.paint_1 = Paint.objects.create(
             name='Test 1',
             article='600.00.00',
             manufacturer=manufacturer,
-            series=serie,
+            series=series,
             quantity=1,
         )
         self.paint_2 = Paint.objects.create(
             name='Test 2',
             article='700.00.00',
             manufacturer=manufacturer,
-            series=serie,
+            series=series,
             quantity=5,
         )
         self.paint_3 = Paint.objects.create(
             name='Test 3 600.00.00',
             article='100.00.00',
             manufacturer=manufacturer,
-            series=serie,
+            series=series,
             quantity=1,
         )
 
@@ -63,3 +66,18 @@ class PaintsApiTestCase(APITestCase):
             PaintSerializer([self.paint_1, self.paint_3], many=True).data,
             response.data,
         )
+
+    # CRUD Tests
+    def test_create(self):
+        url = reverse('paint-list')
+        data = {
+            'name': 'Test name CRUD',
+            'article': '555.CRUD.Test',
+            'series': 1,
+            'manufacturer': 1,
+            'quantity': 500
+        }
+        json_data = json.dumps(data)
+        self.client.force_login(self.user)
+        response = self.client.post(url, data=json_data, content_type='application/json')
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)

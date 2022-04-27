@@ -9,11 +9,11 @@ class Manufacturer(models.Model):
     name = models.CharField('Manufacturer\'s name', max_length=255)
 
 
-class Serie(models.Model):
+class Series(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
-    name = models.CharField('Serie\'s name', max_length=255)
+    name = models.CharField('Series name', max_length=255)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
 
 
@@ -28,7 +28,7 @@ class Paint(models.Model):
         PASTE = 'Texture paste'
 
     class Bases(models.TextChoices):
-        ACRYL = 'Acryl'
+        ACRYLIC = 'Acrylic'
         ENAMEL = 'Enamel'
         OIL = 'Oil'
 
@@ -51,15 +51,15 @@ class Paint(models.Model):
     )
     article = models.CharField('art. number', max_length=100, default='')
     manufacturer = models.ForeignKey(
-        Manufacturer, verbose_name='Manufacturer\'s name', on_delete=models.CASCADE
+        Manufacturer, verbose_name='Manufacturer\'s name', on_delete=models.CASCADE, null=False, default=1
     )
     series = models.ForeignKey(
-        Serie, verbose_name='Serie\'s name', on_delete=models.SET_NULL, null=True
+        Series, verbose_name='Series name', on_delete=models.SET_NULL, null=True, default=1
     )
     description = models.CharField('Description', max_length=255, default='')
     color = models.CharField('#FFFFFF format color', max_length=6, default='')
     base = models.CharField(
-        'Base type', max_length=50, choices=Bases.choices, default=Bases.ACRYL
+        'Base type', max_length=50, choices=Bases.choices, default=Bases.ACRYLIC
     )
     opacity = models.CharField(
         'Opacity', max_length=50, choices=Opacity.choices, default=Opacity.OPAQUE
