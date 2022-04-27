@@ -15,7 +15,7 @@ class PaintsViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_fields = ['quantity']
-    search_fields = ['name', 'article', 'description']
+    search_fields = ['name', 'catalog_number', 'description']
     ordering_fields = ['quantity', 'color']
 
 

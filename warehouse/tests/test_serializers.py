@@ -13,10 +13,8 @@ class PaintSerializerTestCase(TestCase):
         paint_2 = Paint.objects.create(
             name='Test 2', manufacturer=manufacturer, series=series
         )
-        data = PaintSerializer([paint_1, paint_2], many=True).data
+        data = PaintSerializer(paint_1).data
 
-        expected_data = [
-            {'id': paint_1.id, 'name': 'Test 1[47 chars]'}, # TODO There's a bug
-        ]
+        expected_data = {'id': paint_1.id, 'name': 'Test 1', 'quantity': 1}
 
         self.assertEqual(expected_data, data)

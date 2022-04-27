@@ -14,27 +14,35 @@ class PaintsApiTestCase(APITestCase):
         series = Series.objects.create(name='Test Series 1', manufacturer=manufacturer)
         self.paint_1 = Paint.objects.create(
             name='Test 1',
-            article='600.00.00',
+            catalog_number='600.00.00',
             manufacturer=manufacturer,
             series=series,
             quantity=1,
         )
         self.paint_2 = Paint.objects.create(
             name='Test 2',
-            article='700.00.00',
+            catalog_number='700.00.00',
             manufacturer=manufacturer,
             series=series,
             quantity=5,
         )
         self.paint_3 = Paint.objects.create(
             name='Test 3 600.00.00',
-            article='100.00.00',
+            catalog_number='100.00.00',
             manufacturer=manufacturer,
             series=series,
             quantity=1,
         )
 
-    def test_get(self):
+    def test_get_detail(self):
+        url = reverse('paint-detail', args=(self.paint_1.id,))
+
+        # url = 'http://127.0.0.1/paints/?format=json'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(PaintSerializer(self.paint_1).data, response.data)
+
+    def test_get_list(self):
         url = reverse('paint-list')
 
         # url = 'http://127.0.0.1/paints/?format=json'
@@ -90,7 +98,7 @@ class PaintsApiTestCase(APITestCase):
         url = reverse('paint-detail', args=(self.paint_1.id,))
         data = {
             'name': 'Changed name CRUD',
-            'quantity': 5,
+            'quantity': 100,
         }
         json_data = json.dumps(data)
 
@@ -98,7 +106,7 @@ class PaintsApiTestCase(APITestCase):
         response = self.client.put(url, data=json_data, content_type='application/json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.paint_1.refresh_from_db()
-        self.assertEqual(5, self.paint_1.quantity)
+        self.assertEqual(100, self.paint_1.quantity)
 
     def test_delete(self):
         url = reverse('paint-detail', args=(self.paint_3.id,))
@@ -109,4 +117,3 @@ class PaintsApiTestCase(APITestCase):
         response = self.client.delete(url, content_type='application/json')
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
         self.assertEqual(2, Paint.objects.all().count())
-

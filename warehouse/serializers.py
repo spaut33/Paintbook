@@ -6,4 +6,4 @@ from warehouse.models import Paint
 class PaintSerializer(ModelSerializer):
     class Meta:
         model = Paint
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'quantity')
