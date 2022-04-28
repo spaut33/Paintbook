@@ -85,10 +85,11 @@ WSGI_APPLICATION = 'modelpaints.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'OPTIONS': {
-            'service': 'modelpaints_service',
-            'passfile': '.my_pgpass',
-        },
+        'NAME': os.environ.get('PG_SQL_NAME'),
+        'USER': os.environ.get('PG_SQL_USER'),
+        'PASSWORD': '',
+        'HOST': os.environ.get('PG_SQL_HOST'),
+        'PORT': '5432',
     }
 }
 
