@@ -26,6 +26,7 @@ router.register('paints', PaintsViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('', include('social_django.urls', namespace='social')),
+    path('__reload__/', include('django_browser_reload.urls')),
     path('auth/', auth),
 ]
 

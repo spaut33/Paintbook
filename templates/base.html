@@ -1,0 +1,22 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    {% tailwind_css %}
+    <link rel="preload" href="/static/fonts/Raleway.woff2?v=1" as="font" type="font/woff2" crossorigin="">
+</head>
+<body class="font-sans leading-normal tracking-normal h-full">
+<div id="content" class="container mx-auto">
+        {% block content %}
+        {% endblock %}
+</div>
+<div id="sidebar">
+    {% block sidebar %}
+    {% endblock %}
+</div>
+</body>
+</html>

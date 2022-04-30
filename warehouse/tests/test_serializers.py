@@ -15,6 +15,6 @@ class PaintSerializerTestCase(TestCase):
         )
         data = PaintSerializer(paint_1).data
 
-        expected_data = {'id': paint_1.id, 'name': 'Test 1', 'quantity': 1}
+        expected_data = {'id': paint_1.id, 'name': 'Test 1'}
 
         self.assertEqual(expected_data, data)

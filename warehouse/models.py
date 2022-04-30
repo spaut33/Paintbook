@@ -80,6 +80,25 @@ class Paint(models.Model):
         'Glossiness', max_length=50, choices=Gloss.choices, default=Gloss.MATT
     )
     metallic = models.BooleanField('Metallic', default=False)
-    quantity = models.PositiveSmallIntegerField('Total quantity', default=1)
     time_added = models.DateTimeField('Date added', auto_now=True)
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    published = models.BooleanField('Published', default=True)
+
+
+class UserPaint(models.Model):
+    RATE_CHOICES = (
+        (1, '⭐'),
+        (2, '⭐⭐'),
+        (3, '⭐⭐⭐'),
+        (4, '⭐⭐⭐⭐'),
+        (5, '⭐⭐⭐⭐⭐'),
+    )
+
+    def __str__(self):
+        return '{}: {}, total: {}'.format(self.user.username, self.paint, self.quantity)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    paint = models.ForeignKey(Paint, on_delete=models.CASCADE)
+    favorites = models.BooleanField(default=False)
+    rating = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
+    quantity = models.PositiveSmallIntegerField(default=0)
