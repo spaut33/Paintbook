@@ -3,7 +3,7 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
 from django.contrib.auth.models import User
-from warehouse.models import Paint, Series, Manufacturer
+from warehouse.models import Paint, Series, Manufacturer, UserPaint
 from warehouse.serializers import PaintSerializer
 
 
@@ -181,3 +181,89 @@ class PaintsApiTestCase(APITestCase):
 
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
         self.assertEqual(2, Paint.objects.all().count())
+
+
+class UserPaintsApiTestCase(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create(username='test_username')
+        self.user_staff = User.objects.create(username='admin_user', is_staff=True)
+        manufacturer = Manufacturer.objects.create(name='Test Manufacturer 1')
+        series = Series.objects.create(name='Test Series 1', manufacturer=manufacturer)
+        self.paint_1 = Paint.objects.create(
+            name='Test 1',
+            catalog_number='600.00.00',
+            manufacturer=manufacturer,
+            series=series,
+            owner=self.user,
+        )
+        self.paint_2 = Paint.objects.create(
+            name='Test 2',
+            catalog_number='700.00.00',
+            manufacturer=manufacturer,
+            series=series,
+            published=False,
+        )
+        self.paint_3 = Paint.objects.create(
+            name='Test 3 600.00.00',
+            catalog_number='100.00.00',
+            manufacturer=manufacturer,
+            series=series,
+            owner=self.user,
+        )
+
+    def test_favorite(self):
+        # Tests if user added paint to a list of favorites paints
+        url = reverse('userpaint-detail', args=(self.paint_1.id,))
+
+        data = {
+            'favorite': True,
+        }
+        json_data = json.dumps(data)
+        self.client.force_login(self.user)
+        response = self.client.patch(url, data=json_data, content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        user_paint = UserPaint.objects.get(user=self.user, paint=self.paint_1)
+        self.assertTrue(user_paint.favorite)
+
+    def test_rating(self):
+        # Tests if user added paint to a list of favorites paints
+        url = reverse('userpaint-detail', args=(self.paint_1.id,))
+
+        data = {
+            'rating': 4,
+        }
+        json_data = json.dumps(data)
+        self.client.force_login(self.user)
+        response = self.client.patch(url, data=json_data, content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        user_paint = UserPaint.objects.get(user=self.user, paint=self.paint_1)
+        self.assertEqual(4, user_paint.rating)
+
+        # Test against wrong rating numbers (we have to accept 1-5 only)
+        data = {
+            'rating': 1000,
+        }
+        json_data = json.dumps(data)
+        response = self.client.patch(url, data=json_data, content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        data = {
+            'rating': 'test',
+        }
+        json_data = json.dumps(data)
+        response = self.client.patch(url, data=json_data, content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        data = {
+            'rating': -400,
+        }
+        json_data = json.dumps(data)
+        response = self.client.patch(url, data=json_data, content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        data = {
+            'rating': 0,
+        }
+        json_data = json.dumps(data)
+        response = self.client.patch(url, data=json_data, content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

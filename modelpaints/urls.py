@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 from rest_framework.routers import SimpleRouter
-from warehouse.views import PaintsViewSet, auth
+from warehouse.views import PaintsViewSet, auth, UserPaintViewSet
 
 router = SimpleRouter()
 
 router.register('paints', PaintsViewSet)
+router.register('user_paints', UserPaintViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
