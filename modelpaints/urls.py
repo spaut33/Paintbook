@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 from rest_framework.routers import SimpleRouter
+
+from modelpaints import settings
 from warehouse.views import PaintsViewSet, auth, UserPaintViewSet
 
 router = SimpleRouter()
@@ -30,5 +32,10 @@ urlpatterns = [
     path('__reload__/', include('django_browser_reload.urls')),
     path('auth/', auth),
 ]
+
+urlpatterns = [
+    # ...
+    path('__debug__/', include('debug_toolbar.urls')),
+] + urlpatterns
 
 urlpatterns += router.urls

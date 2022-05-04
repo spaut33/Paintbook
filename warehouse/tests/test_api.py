@@ -1,4 +1,6 @@
 import json
+
+from django.db.models import Avg, Max
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
@@ -35,49 +37,45 @@ class PaintsApiTestCase(APITestCase):
             owner=self.user,
         )
 
-    def test_get_detail(self):
-        url = reverse('paint-detail', args=(self.paint_1.id,))
-
-        # url = 'http://127.0.0.1/paints/?format=json'
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(PaintSerializer(self.paint_1).data, response.data)
-
     def test_get_list(self):
         url = reverse('paint-list')
 
-        # url = 'http://127.0.0.1/paints/?format=json'
         response = self.client.get(url)
+        paints = Paint.objects.all().annotate(average_rating=Avg('userpaint__rating'),
+                                              max_rating=Max('userpaint__rating'))
+        serializer_data = PaintSerializer(paints, many=True).data
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            PaintSerializer([self.paint_1, self.paint_2, self.paint_3], many=True).data,
-            response.data,
+            serializer_data,
+            response.data
         )
+        self.assertEqual(serializer_data[0]['average_rating'], None)
+        self.assertEqual(serializer_data[0]['max_rating'], None)
 
     def test_get_filter(self):
         url = reverse('paint-list')
-
-        # url = 'http://127.0.0.1/paints/?format=json'
+        paints = Paint.objects.filter(id=self.paint_2.id).annotate(average_rating=Avg('userpaint__rating'),
+                                                                   max_rating=Max('userpaint__rating')).order_by('id')
         response = self.client.get(url, data={'published': 0})
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            PaintSerializer([self.paint_2], many=True).data,
+            PaintSerializer(paints, many=True).data,
             response.data,
         )
 
     def test_get_search(self):
         url = reverse('paint-list')
-
-        # url = 'http://127.0.0.1/paints/?format=json'
+        paints = Paint.objects.filter(id__in=[self.paint_1.id, self.paint_3.id]).annotate(
+            average_rating=Avg('userpaint__rating'),
+            max_rating=Max('userpaint__rating'))
         response = self.client.get(url, data={'search': '600.00.00'})
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            PaintSerializer([self.paint_1, self.paint_3], many=True).data,
-            response.data,
+            PaintSerializer(paints, many=True).data,
+            response.data
         )
 
     # CRUD Tests

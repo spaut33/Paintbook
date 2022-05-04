@@ -1,3 +1,4 @@
+from django.db.models import Avg, Max
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -16,7 +17,8 @@ def auth(request):
 
 # Create your views here.
 class PaintsViewSet(ModelViewSet):
-    queryset = Paint.objects.all()
+    queryset = Paint.objects.all().annotate(average_rating=Avg('userpaint__rating'),
+                                            max_rating=Max('userpaint__rating')).select_related('owner')
     serializer_class = PaintSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     permission_classes = [IsOwnerOrAdminOrReadOnly]
