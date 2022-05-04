@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #  Django debug toolbar TODO: make it visible on serializer viewset (httpresponse)
     'debug_toolbar',
     'social_django',
     'tailwind',
