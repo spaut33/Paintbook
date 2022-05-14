@@ -11,7 +11,7 @@ class Manufacturer(models.Model):
     name = models.CharField('Manufacturer\'s name', max_length=255)
 
 
-# Paints can have different series even if it is the same color of the same producer.
+# Paints can have different series even if it has the same color of the same producer.
 # For example: Model color and Air color of Vallejo
 # Foreign key of paint
 class Series(models.Model):
@@ -57,13 +57,13 @@ class Paint(models.Model):
     )
     catalog_number = models.CharField('Catalog (art.) number', max_length=100, default='')
 
-    # If manufacturer is deleted from the DB, all paints will be removed as well.
+    # If manufacturer deleted from the DB, all paints will be removed as well.
     # models.CASCADE for this case
     manufacturer = models.ForeignKey(
         Manufacturer, verbose_name='Manufacturer\'s name', on_delete=models.CASCADE, null=False, default=1
     )
 
-    # Series is not very important data so the paint should be left in the DB even after deletion of the series
+    # Series is not very important data so the paint should leave in the DB even after deletion of the series
     # models.SET_NULL for this case
     series = models.ForeignKey(
         Series, verbose_name='Series name', on_delete=models.SET_NULL, null=True, default=1

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        if (
+            localStorage.getItem('color-theme') === 'dark' ||
+            (!('color-theme' in localStorage) &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <title>Paintbook</title>
+    <link rel="preload" href="fonts/Raleway.woff2?v=1" as="font" type="font/woff2" crossorigin="">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        accent_pink: '#ed1e79',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        a {
+            @apply hover:text-pink-600;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen dark:bg-gray-800 dark:text-gray-200 bg-gray-100"
+    style="font-family:Raleway, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+    <header
+        class="sticky top-0 dark:bg-gray-900/70 bg-white/70 dark:border-gray-800/70 border-gray-300 border-b drop-shadow-sm h-16 backdrop-blur-sm">
+        <div class="container mx-auto h-full">
+            <div class="flex justify-between items-center h-full">
+                <div class="flex items-center w-full ml-4">
+                    <a href="#" id="logo" class="block pr-8">
+                        <svg class="w-52" id="f08e7d72-7941-485d-803c-51f9dd7fe4fe" data-name="Layer 1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 850.95 110.77">
+                            <defs>
+                                <style>
+                                    .b54652c9-d3d2-4efc-998f-d074377031ae {
+                                        fill: red;
+                                    }
+
+                                    .b590feab-5172-4f29-8ee5-3f468275fb34 {
+                                        fill: url(#bd291be0-f2e3-42d0-aea2-5e17bbbffa3a);
+                                    }
+
+                                    .b90c10d3-8229-40bb-b844-290795b02500 {
+                                        fill: #ed1e79;
+                                    }
+                                </style>
+                                <linearGradient id="bd291be0-f2e3-42d0-aea2-5e17bbbffa3a" x1="150.05" y1="55.38"
+                                    x2="850.95" y2="55.38" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-color="#ed1e79" />
+                                    <stop offset="1" stop-color="#0071bc" />
+                                </linearGradient>
+                            </defs>
+                            <path class="b54652c9-d3d2-4efc-998f-d074377031ae"
+                                d="M163.52,95.22V14.93H150.05V1.54h38.26q16.86,0,25.25,2.39t14,10.81a34.79,34.79,0,0,1,5.66,19.9,35.43,35.43,0,0,1-3.73,16.43,26.61,26.61,0,0,1-9.24,10.74,33.94,33.94,0,0,1-12.39,4.66q-6.9,1.2-20.82,1.19h-7.39V95.22h13.85v13.39H150.05V95.22Zm16.17-40.49h9.23q15.78,0,21.86-4.5t6.09-15.9a21,21,0,0,0-3.24-12,14.15,14.15,0,0,0-8-6.08q-4.78-1.3-15.94-1.31h-10Z" />
+                            <path class="b54652c9-d3d2-4efc-998f-d074377031ae"
+                                d="M312.47,95.61v13H286.91V99.53q-10.62,10.32-23.7,10.32a25.86,25.86,0,0,1-17.67-6.62A21.6,21.6,0,0,1,238,86.29a21.78,21.78,0,0,1,8-17.24,28.44,28.44,0,0,1,19.21-6.85,36.8,36.8,0,0,1,20.24,6.31V61.12a27.77,27.77,0,0,0-1.08-8.78c-.72-2.05-2.4-3.89-5-5.54s-6.09-2.46-10.35-2.46q-11,0-15.94,8.77l-14-3.69Q248.35,32,271.21,32a41.83,41.83,0,0,1,14.51,2.27q6.12,2.28,9.12,5.85a19.24,19.24,0,0,1,4,7.74q1,4.15,1,13.24V95.61Zm-27-14.71q-9.46-7.38-19.17-7.39a15,15,0,0,0-10.16,3.54A11.59,11.59,0,0,0,252,86.21,11.88,11.88,0,0,0,255.62,95q3.58,3.54,9.74,3.54,10.62,0,20.09-8.93Z" />
+                            <path class="b54652c9-d3d2-4efc-998f-d074377031ae"
+                                d="M331.18,95.61V47.11H319.63v-13H345.8V95.61h11.55v13H319.63v-13ZM329.1,8.78a8.61,8.61,0,0,1,2.5-6.16A8.39,8.39,0,0,1,338,0a8.68,8.68,0,0,1,6.24,2.54,8.36,8.36,0,0,1,2.61,6.24,8.49,8.49,0,0,1-2.61,6.27A8.6,8.6,0,0,1,338,17.63,8.46,8.46,0,0,1,331.68,15,8.56,8.56,0,0,1,329.1,8.78Z" />
+                            <path class="b54652c9-d3d2-4efc-998f-d074377031ae"
+                                d="M392.45,34.1v9Q406.54,32.94,418.16,33q7.23,0,12,3.42a15.8,15.8,0,0,1,6.2,8.39q1.46,5,1.46,14.51V95.61h12.55v13H423.16V59.89q0-8.47-2.54-11a8.4,8.4,0,0,0-6.23-2.58q-9.7,0-21.94,9.47V95.61H405.3v13H364.74v-13h13.08V47.11H364.74v-13Z" />
+                            <path class="b54652c9-d3d2-4efc-998f-d074377031ae"
+                                d="M449.18,47.11v-13h9.7V22.63L473.51,9.24V34.1h13.78v13H473.51V83.29q0,8.7,1,10.74c.64,1.36,2.25,2,4.81,2a21.92,21.92,0,0,0,8-1.54v13.31a33.23,33.23,0,0,1-11.24,2q-6.71,0-10.85-3A12.58,12.58,0,0,1,460,99.45q-1.08-4.45-1.08-15.39V47.11Z" />
+                            <path class="b54652c9-d3d2-4efc-998f-d074377031ae"
+                                d="M496.3,108.61v-13h13.24V14.55H496.3v-13h27.56V44.65q11-12.63,27-12.63,15.4,0,25.83,10.59t10.43,27.9q0,16.63-10.2,28T550.8,109.85A34.83,34.83,0,0,1,534.48,106q-7.4-3.85-10.62-8.55v11.16Zm28-37.1q0,11.63,7.12,18.44a23.05,23.05,0,0,0,16.43,6.81,22.76,22.76,0,0,0,16.86-7.24q7.08-7.23,7.08-19.39,0-11.79-7-18.29a23.59,23.59,0,0,0-16.51-6.5,23.85,23.85,0,0,0-16.63,6.74Q524.31,58.82,524.32,71.51Z" />
+                            <path class="b54652c9-d3d2-4efc-998f-d074377031ae"
+                                d="M596.2,71.36q0-17.25,11.39-28.29a38.45,38.45,0,0,1,27.79-11A38.88,38.88,0,0,1,663,42.91q11.55,10.91,11.54,28.45t-11.5,28.48a38.76,38.76,0,0,1-27.68,10.93q-16.62,0-27.9-11.09T596.2,71.36Zm15.47,0q0,11,6.89,18.08a23.59,23.59,0,0,0,33.72-.08q6.81-7.12,6.81-18t-6.93-18a22.56,22.56,0,0,0-16.78-7.09,22.16,22.16,0,0,0-17,7.24A25.38,25.38,0,0,0,611.67,71.32Z" />
+                            <path class="b54652c9-d3d2-4efc-998f-d074377031ae"
+                                d="M684.36,71.36q0-17.25,11.4-28.29a38.44,38.44,0,0,1,27.79-11,38.87,38.87,0,0,1,27.63,10.89q11.55,10.91,11.55,28.45T751.22,99.84a38.74,38.74,0,0,1-27.67,10.93q-16.63,0-27.91-11.09T684.36,71.36Zm15.48,0q0,11,6.89,18.08a22.62,22.62,0,0,0,16.82,7,22.39,22.39,0,0,0,16.89-7.13q6.81-7.12,6.82-18t-6.93-18a22.6,22.6,0,0,0-16.78-7.09,22.17,22.17,0,0,0-17,7.24A25.38,25.38,0,0,0,699.84,71.32Z" />
+                            <path class="b54652c9-d3d2-4efc-998f-d074377031ae"
+                                d="M779.67,95.61V14.55h-13.4v-13h28V68.43l27.87-22.24H809.77V34.1H851V46.19H839.56L811.61,69.43l26.25,26.18H851v13H831.78L794.29,71.13V95.61h12.86v13H766.27v-13Z" />
+                            <path class="b590feab-5172-4f29-8ee5-3f468275fb34"
+                                d="M163.52,95.22V14.93H150.05V1.54h38.26q16.86,0,25.25,2.39t14,10.81a34.79,34.79,0,0,1,5.66,19.9,35.43,35.43,0,0,1-3.73,16.43,26.61,26.61,0,0,1-9.24,10.74,33.94,33.94,0,0,1-12.39,4.66q-6.9,1.2-20.82,1.19h-7.39V95.22h13.85v13.39H150.05V95.22Zm16.17-40.49h9.23q15.78,0,21.86-4.5t6.09-15.9a21,21,0,0,0-3.24-12,14.15,14.15,0,0,0-8-6.08q-4.78-1.3-15.94-1.31h-10Z" />
+                            <path class="b590feab-5172-4f29-8ee5-3f468275fb34"
+                                d="M312.47,95.61v13H286.91V99.53q-10.62,10.32-23.7,10.32a25.86,25.86,0,0,1-17.67-6.62A21.6,21.6,0,0,1,238,86.29a21.78,21.78,0,0,1,8-17.24,28.44,28.44,0,0,1,19.21-6.85,36.8,36.8,0,0,1,20.24,6.31V61.12a27.77,27.77,0,0,0-1.08-8.78c-.72-2.05-2.4-3.89-5-5.54s-6.09-2.46-10.35-2.46q-11,0-15.94,8.77l-14-3.69Q248.35,32,271.21,32a41.83,41.83,0,0,1,14.51,2.27q6.12,2.28,9.12,5.85a19.24,19.24,0,0,1,4,7.74q1,4.15,1,13.24V95.61Zm-27-14.71q-9.46-7.38-19.17-7.39a15,15,0,0,0-10.16,3.54A11.59,11.59,0,0,0,252,86.21,11.88,11.88,0,0,0,255.62,95q3.58,3.54,9.74,3.54,10.62,0,20.09-8.93Z" />
+                            <path class="b590feab-5172-4f29-8ee5-3f468275fb34"
+                                d="M331.18,95.61V47.11H319.63v-13H345.8V95.61h11.55v13H319.63v-13ZM329.1,8.78a8.61,8.61,0,0,1,2.5-6.16A8.39,8.39,0,0,1,338,0a8.68,8.68,0,0,1,6.24,2.54,8.36,8.36,0,0,1,2.61,6.24,8.49,8.49,0,0,1-2.61,6.27A8.6,8.6,0,0,1,338,17.63,8.46,8.46,0,0,1,331.68,15,8.56,8.56,0,0,1,329.1,8.78Z" />
+                            <path class="b590feab-5172-4f29-8ee5-3f468275fb34"
+                                d="M392.45,34.1v9Q406.54,32.94,418.16,33q7.23,0,12,3.42a15.8,15.8,0,0,1,6.2,8.39q1.46,5,1.46,14.51V95.61h12.55v13H423.16V59.89q0-8.47-2.54-11a8.4,8.4,0,0,0-6.23-2.58q-9.7,0-21.94,9.47V95.61H405.3v13H364.74v-13h13.08V47.11H364.74v-13Z" />
+                            <path class="b590feab-5172-4f29-8ee5-3f468275fb34"
+                                d="M449.18,47.11v-13h9.7V22.63L473.51,9.24V34.1h13.78v13H473.51V83.29q0,8.7,1,10.74c.64,1.36,2.25,2,4.81,2a21.92,21.92,0,0,0,8-1.54v13.31a33.23,33.23,0,0,1-11.24,2q-6.71,0-10.85-3A12.58,12.58,0,0,1,460,99.45q-1.08-4.45-1.08-15.39V47.11Z" />
+                            <path class="b590feab-5172-4f29-8ee5-3f468275fb34"
+                                d="M496.3,108.61v-13h13.24V14.55H496.3v-13h27.56V44.65q11-12.63,27-12.63,15.4,0,25.83,10.59t10.43,27.9q0,16.63-10.2,28T550.8,109.85A34.83,34.83,0,0,1,534.48,106q-7.4-3.85-10.62-8.55v11.16Zm28-37.1q0,11.63,7.12,18.44a23.05,23.05,0,0,0,16.43,6.81,22.76,22.76,0,0,0,16.86-7.24q7.08-7.23,7.08-19.39,0-11.79-7-18.29a23.59,23.59,0,0,0-16.51-6.5,23.85,23.85,0,0,0-16.63,6.74Q524.31,58.82,524.32,71.51Z" />
+                            <path class="b590feab-5172-4f29-8ee5-3f468275fb34"
+                                d="M596.2,71.36q0-17.25,11.39-28.29a38.45,38.45,0,0,1,27.79-11A38.88,38.88,0,0,1,663,42.91q11.55,10.91,11.54,28.45t-11.5,28.48a38.76,38.76,0,0,1-27.68,10.93q-16.62,0-27.9-11.09T596.2,71.36Zm15.47,0q0,11,6.89,18.08a23.59,23.59,0,0,0,33.72-.08q6.81-7.12,6.81-18t-6.93-18a22.56,22.56,0,0,0-16.78-7.09,22.16,22.16,0,0,0-17,7.24A25.38,25.38,0,0,0,611.67,71.32Z" />
+                            <path class="b590feab-5172-4f29-8ee5-3f468275fb34"
+                                d="M684.36,71.36q0-17.25,11.4-28.29a38.44,38.44,0,0,1,27.79-11,38.87,38.87,0,0,1,27.63,10.89q11.55,10.91,11.55,28.45T751.22,99.84a38.74,38.74,0,0,1-27.67,10.93q-16.63,0-27.91-11.09T684.36,71.36Zm15.48,0q0,11,6.89,18.08a22.62,22.62,0,0,0,16.82,7,22.39,22.39,0,0,0,16.89-7.13q6.81-7.12,6.82-18t-6.93-18a22.6,22.6,0,0,0-16.78-7.09,22.17,22.17,0,0,0-17,7.24A25.38,25.38,0,0,0,699.84,71.32Z" />
+                            <path class="b590feab-5172-4f29-8ee5-3f468275fb34"
+                                d="M779.67,95.61V14.55h-13.4v-13h28V68.43l27.87-22.24H809.77V34.1H851V46.19H839.56L811.61,69.43l26.25,26.18H851v13H831.78L794.29,71.13V95.61h12.86v13H766.27v-13Z" />
+                            <path class="b90c10d3-8229-40bb-b844-290795b02500"
+                                d="M35.93,31.79a37,37,0,0,0-8.58-.7H22V52.52h5q8.51,0,11.77-2.43C40.89,48.48,42,45.62,42,41.53a11.27,11.27,0,0,0-1.74-6.46A7.64,7.64,0,0,0,35.93,31.79Z" />
+                            <path class="b90c10d3-8229-40bb-b844-290795b02500"
+                                d="M81.14,47.46a12.82,12.82,0,0,0-9,3.63q-3.94,3.63-3.94,10.46c0,4.18,1.28,7.48,3.83,9.93a12.46,12.46,0,0,0,8.85,3.67A12.28,12.28,0,0,0,90,71.25q3.81-3.9,3.81-10.44,0-6.35-3.79-9.85A12.7,12.7,0,0,0,81.14,47.46Z" />
+                            <path class="b90c10d3-8229-40bb-b844-290795b02500"
+                                d="M0,1V108H107V1ZM48.8,50.55a14.28,14.28,0,0,1-5,5.78,18.29,18.29,0,0,1-6.67,2.51,71.34,71.34,0,0,1-11.21.64H22V74.32h7.46v7.21H6V74.32h7.26V31.09H6V23.88H26.6q9.07,0,13.6,1.28A13.52,13.52,0,0,1,47.76,31,18.74,18.74,0,0,1,50.81,41.7,19.1,19.1,0,0,1,48.8,50.55ZM96.58,76.08a18,18,0,0,1-14.07,6.11,18.74,18.74,0,0,1-8.79-2.07A15.36,15.36,0,0,1,68,75.52v6H53.16v-7h7.13V30.88H53.16v-7H68V47.09A19.36,19.36,0,0,1,96.45,46q5.63,5.7,5.62,15A21.74,21.74,0,0,1,96.58,76.08Z" />
+                        </svg>
+                    </a>
+                    <div class="relative w-full">
+                        <div id="search-box">
+                            <input type="search" placeholder="Search"
+                                class="dark:bg-gray-800 bg-gray-100 border border-solid dark:border-gray-600 border-gray-300 rounded-none focus:outline-none focus:text-gray-700 dark:focus:text-gray-200 focus:bg-white dark:focus:border-pink-600 focus:border-pink-600 pr-4 pl-8 h-7 w-full"
+                                name="" id="">
+                            <div class="absolute top-0 left-1 h-full flex justify-center items-center">
+                                <svg class="text-gray-500 w-5" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center m-4 h-full">
+                    <div class="hover:bg-pink-600 text-gray-500 cursor-pointer hover:text-white h-full w-16">
+                        <a href="#" id="plus-sign"
+                            class="h-full w-full flex items-center justify-center hover:text-white">
+                            <svg class="w-6" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </a>
+                    </div>
+                    <!-- Profile menu -->
+                    <div class="relative h-full flex items-center">
+                        <div id="profile" class="flex items-center m-4 h-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                            </svg>
+                        </div>
+                        <!-- Dropdown menu -->
+                        <div class="absolute top-full right-0 shadow-lg font-medium">
+                            <div class="bg-white dark:bg-gray-900 w-72 border dark:border-gray-800 p-4 leading-10">
+                                <a href="#" class="block">Login</a>
+                                <a href="#" class="block mb-3">Help</a>
+                                <hr>
+                                <div id="theme-toggle"
+                                    class="cursor-pointer w-full flex justify-between items-center group">
+                                    <span>Theme:</span>
+                                    <div
+                                        class="bg-gray-300 flex items-center justify-center p-1 group-hover:bg-pink-600">
+                                        <svg id="theme-toggle-dark-icon" class="text-white w-5 h-5 hidden"
+                                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z">
+                                            </path>
+                                        </svg>
+                                        <svg id="theme-toggle-light-icon" class="text-white w-5 h-5 hidden"
+                                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                                fill-rule="evenodd" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    Commodo ex nulla dolor ipsum commodo aliqua commodo elit laboris occaecat ad culpa laboris incididunt. Fugiat ea
+    enim sit culpa ut Lorem exercitation est fugiat dolore sit culpa. Fugiat Lorem in excepteur ullamco amet nostrud est
+    laborum consequat non sint anim. Eiusmod qui amet qui ea anim mollit eu deserunt eiusmod excepteur do velit labore
+    consequat. Nisi sit veniam mollit qui. Ullamco officia ad esse sit ullamco minim voluptate. Ex aliqua amet in magna.
+    <br><br><br><br><br><br>
+    Anim ut fugiat sunt adipisicing proident cillum eu ad deserunt. Consequat in elit mollit qui irure est eu excepteur
+    consequat consequat commodo id. Ipsum officia reprehenderit qui adipisicing velit nisi id esse culpa aliquip ex
+    eiusmod. Est id occaecat minim aliqua. Excepteur laboris aliqua Lorem officia eu aute magna. Amet est consectetur
+    commodo laborum exercitation enim est cillum qui ut proident deserunt.
+    <br><br><br><br><br><br>
+    Fugiat ex veniam quis excepteur sunt laborum est cupidatat culpa amet occaecat. Officia aliquip nisi elit velit non
+    nisi proident est culpa occaecat. Aliqua esse do do adipisicing duis dolore sunt et qui ad aliqua eiusmod. Aliquip
+    qui consectetur eu ullamco mollit tempor irure eu ipsum incididunt. Consectetur ad dolore et aliqua irure et.
+    <br><br><br><br><br><br>
+    Nostrud amet cillum nulla reprehenderit tempor adipisicing dolor quis id reprehenderit. Deserunt nisi anim id elit
+    nisi cupidatat non. Ullamco ullamco aute aliqua proident.
+</body>
+<script>
+    var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+    // Change the icons inside the button based on previous settings
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        themeToggleLightIcon.classList.remove('hidden');
+    } else {
+        themeToggleDarkIcon.classList.remove('hidden');
+    }
+
+    var themeToggleBtn = document.getElementById('theme-toggle');
+
+    themeToggleBtn.addEventListener('click', function () {
+
+        // toggle icons inside button
+        themeToggleDarkIcon.classList.toggle('hidden');
+        themeToggleLightIcon.classList.toggle('hidden');
+
+        // if set via local storage previously
+        if (localStorage.getItem('color-theme')) {
+            if (localStorage.getItem('color-theme') === 'light') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            }
+
+            // if NOT set via local storage previously
+        } else {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        }
+
+    });
+</script>
+
+</html>
