@@ -14,18 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
-
+from django.urls import include, path, re_path
 from rest_framework.routers import SimpleRouter
-
-from core import settings
-from warehouse.views import PaintsViewSet, auth, UserPaintViewSet
+from warehouse.views import PaintsViewSet, UserPaintViewSet, auth
 
 router = SimpleRouter()
 
 router.register('paints', PaintsViewSet)
 router.register('user_paints', UserPaintViewSet)
 
+# admin, social auth routes
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('', include('social_django.urls', namespace='social')),
@@ -33,9 +31,14 @@ urlpatterns = [
     path('auth/', auth),
 ]
 
+# API endpoint
+urlpatterns = [
+    path(
+        'api/v1/', include((router.urls, 'warehouse'), namespace='warehouse')
+    ),
+] + urlpatterns
+
 urlpatterns = [
     # ...
     path('__debug__/', include('debug_toolbar.urls')),
 ] + urlpatterns
-
-urlpatterns += router.urls
