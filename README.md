@@ -1,7 +1,6 @@
-# 🚧 WIP!!!
+## 🚧 WIP!!!
 
 ![Paintbook](https://raw.githubusercontent.com/spaut33/modelpaints/master/design/logo.svg)
-## This is a work in progress project (for educational purposes mostly). Use it on your own risks, no warranties!
 
 `Paintbook` is a catalog of model paints (and other similar chemical stuff) that are widely used by scale modellers. It helps to organize paints you own, so you can see total amount of each paint, add, modify and delete it. 
 You won't buy a paint you don't need anymore! 😆
